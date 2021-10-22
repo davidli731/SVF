@@ -49,7 +49,7 @@ static const ei_pair_map ei_pair_maps[] =
         {"ExtAPI::EFT_L_A2", ExtAPI::EFT_L_A2},
         {"ExtAPI::EFT_L_A8", ExtAPI::EFT_L_A8},
         {"ExtAPI::EFT_L_A0__A0R_A1", ExtAPI::EFT_L_A0__A0R_A1},
-        {"ExtAPI::EFT_L_A0__A0R_A1R", ExtAPI::EFT_L_A0__A0R_A1R}
+        {"ExtAPI::EFT_L_A0__A0R_A1R", ExtAPI::EFT_L_A0__A0R_A1R},
         {"ExtAPI::EFT_L_A1__FunPtr", ExtAPI::EFT_L_A1__FunPtr},
         {"ExtAPI::EFT_A1R_A0R", ExtAPI::EFT_A1R_A0R},
         {"ExtAPI::EFT_A3R_A1R_NS", ExtAPI::EFT_A3R_A1R_NS},
@@ -62,7 +62,7 @@ static const ei_pair_map ei_pair_maps[] =
         {"ExtAPI::EFT_A2R_NEW", ExtAPI::EFT_A2R_NEW},
         {"ExtAPI::EFT_A4R_NEW", ExtAPI::EFT_A4R_NEW},
         {"ExtAPI::EFT_A11R_NEW", ExtAPI::EFT_A11R_NEW},
-        {"ExtAPI::EFT_STD_RB_TREE_INSERT_AND_REBALANCE", ExtAPI::EFT_STD_RB_TREE_INSERT_AND_REBALANCE}
+        {"ExtAPI::EFT_STD_RB_TREE_INSERT_AND_REBALANCE", ExtAPI::EFT_STD_RB_TREE_INSERT_AND_REBALANCE},
         {"ExtAPI::EFT_STD_LIST_HOOK", ExtAPI::EFT_STD_LIST_HOOK},
         {"ExtAPI::CPP_EFT_A0R_A1", ExtAPI::CPP_EFT_A0R_A1},
         {"ExtAPI::CPP_EFT_A0R_A1R", ExtAPI::CPP_EFT_A0R_A1R},
