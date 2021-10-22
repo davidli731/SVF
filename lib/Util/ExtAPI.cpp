@@ -187,7 +187,7 @@ void ExtAPI::init()
                         putc('\n', stderr);
                         assert(!"ei_pairs not grouped by type");
                     }
-                    std::cout << ei_pair_n << " " << ei_pair_t << "\n";
+                    //std::cout << ei_pair_n << " " << ei_pair_t << "\n";
                     t_seen.insert(ei_pair_t);
                     prev_t = ei_pair_t;
                 }
