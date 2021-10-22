@@ -7,7 +7,7 @@
  * Modified by Yulei Sui 2013
 */
 
-#include "Util/ExtAPI.h"
+/*#include "Util/ExtAPI.h"
 #include <fstream>
 #include <stdio.h>
 #include <string>
@@ -65,7 +65,7 @@ static const ei_pair_map ei_pair_maps[] =
         {"ExtAPI::CPP_EFT_A0R_A1", ExtAPI::CPP_EFT_A0R_A1},
         {"ExtAPI::CPP_EFT_A0R_A1R", ExtAPI::CPP_EFT_A0R_A1R},
         {"ExtAPI::CPP_EFT_A1R", ExtAPI::CPP_EFT_A1R},
-        {"ExtAPI::CPP_EFT_DYNAMIC_CAST", ExtAPI::CPP_EFT_DYNAMIC_CAST}};
+        {"ExtAPI::CPP_EFT_DYNAMIC_CAST", ExtAPI::CPP_EFT_DYNAMIC_CAST}};*/
 
 /*  FIXME:
  *  SSL_CTX_ctrl, SSL_ctrl - may set the ptr field arg0->x
@@ -91,7 +91,7 @@ static const ei_pair_map ei_pair_maps[] =
  *  hasmntopt - returns arg0->mnt_opts
  */
 
-void ExtAPI::init()
+/*void ExtAPI::init()
 {
     set<extf_t> t_seen;
     extf_t prev_t = EFT_NOOP;
@@ -174,7 +174,7 @@ void ExtAPI::init()
                         break;
                     }
                 }
-                std::cout << ei_pair_n << " " << ei_pair_t << "\n";
+                //std::cout << ei_pair_n << " " << ei_pair_t << "\n";
                 if (ei_pair_t != prev_t)
                 {
                     //This will detect if you move an entry to another block
@@ -198,12 +198,12 @@ void ExtAPI::init()
             }
         }
     }
-}
+}*/
 
 
 
 
-/*#include "Util/ExtAPI.h"
+#include "Util/ExtAPI.h"
 #include <stdio.h>
 #include <iostream>
 
@@ -1026,7 +1026,7 @@ void ExtAPI::init()
     t_seen.insert(EFT_NOOP);
     for(const ei_pair *p= ei_pairs; p->n; ++p)
     {
-        std::cout << p->n << " " << p->t << "\n";
+        //std::cout << p->n << " " << p->t << "\n";
         if(p->t != prev_t)
         {
             //This will detect if you move an entry to another block
@@ -1048,4 +1048,4 @@ void ExtAPI::init()
         }
         info[p->n]= p->t;
     }
-}*/
+}
