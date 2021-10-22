@@ -7,7 +7,7 @@
  * Modified by Yulei Sui 2013
 */
 
-/*#include "Util/ExtAPI.h"
+#include "Util/ExtAPI.h"
 #include <fstream>
 #include <stdio.h>
 #include <string>
@@ -65,7 +65,7 @@ static const ei_pair_map ei_pair_maps[] =
         {"ExtAPI::CPP_EFT_A0R_A1", ExtAPI::CPP_EFT_A0R_A1},
         {"ExtAPI::CPP_EFT_A0R_A1R", ExtAPI::CPP_EFT_A0R_A1R},
         {"ExtAPI::CPP_EFT_A1R", ExtAPI::CPP_EFT_A1R},
-        {"ExtAPI::CPP_EFT_DYNAMIC_CAST", ExtAPI::CPP_EFT_DYNAMIC_CAST}};*/
+        {"ExtAPI::CPP_EFT_DYNAMIC_CAST", ExtAPI::CPP_EFT_DYNAMIC_CAST}};
 
 /*  FIXME:
  *  SSL_CTX_ctrl, SSL_ctrl - may set the ptr field arg0->x
@@ -91,20 +91,20 @@ static const ei_pair_map ei_pair_maps[] =
  *  hasmntopt - returns arg0->mnt_opts
  */
 
-/*void ExtAPI::init()
+void ExtAPI::init()
 {
     set<extf_t> t_seen;
     extf_t prev_t = EFT_NOOP;
     t_seen.insert(EFT_NOOP);
-    std::string get_line, get_str, temp_str;
-    char get_char;
-    const char *ei_pair_n;
-    ExtAPI::extf_t ei_pair_t;
     bool getEIPairs = false;
-    std::size_t pos_start, pos_end;
     std::ifstream getEiPairs("lib/Util/summary.txt");
     while (std::getline(getEiPairs, get_line))
     {
+        std::string get_line, get_str, temp_str;
+        char get_char;
+        const char *ei_pair_n;
+        ExtAPI::extf_t ei_pair_t;
+        std::size_t pos_start, pos_end;
         // Remove spaces
         for (char c : get_line)
         {
@@ -198,12 +198,12 @@ static const ei_pair_map ei_pair_maps[] =
             }
         }
     }
-}*/
+}
 
 
 
 
-#include "Util/ExtAPI.h"
+/*#include "Util/ExtAPI.h"
 #include <stdio.h>
 #include <iostream>
 
@@ -1048,4 +1048,4 @@ void ExtAPI::init()
         }
         info[p->n]= p->t;
     }
-}
+}*/
