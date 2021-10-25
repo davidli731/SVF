@@ -82,10 +82,10 @@ void ExtAPI::init() {
   bool getEIPairs = false;
 
   std::ifstream getEiPairs("lib/Util/summary.txt");
-  if (getEiPairs.is_open()) {
+  /*if (getEiPairs.is_open()) {
     while (std::getline(getEiPairs, get_line)) {
     }
-    /*while (std::getline(getEiPairs, get_line)) {
+    while (std::getline(getEiPairs, get_line)) {
       // Remove spaces
       for (char c : get_line) {
         if (c != ' ') {
@@ -155,8 +155,8 @@ void ExtAPI::init() {
           }
         }
       }
-    }*/
-  }
+    }
+  }*/
   static const ei_pair ei_pairs[] = {
       // The current llvm-gcc puts in the \01.
       {"\01creat64", ExtAPI::EFT_NOOP},
