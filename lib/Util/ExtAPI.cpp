@@ -81,7 +81,13 @@ void ExtAPI::init() {
   bool getEIPairs = false;
   std::ifstream getEiPairs("lib/Util/summary.txt");
   int count = 0;
-  while (std::getline(getEiPairs, get_line)) {
+  if (getEiPairs.is_open()) {
+    while (std::getline(getEiPairs, get_line)) {
+      //std::cout << get_line << "\n";
+    }
+  }
+  getEiPairs.close();
+  /*while (std::getline(getEiPairs, get_line)) {
     // Remove spaces
     for (char c : get_line) {
       if (c != ' ') {
@@ -131,7 +137,7 @@ void ExtAPI::init() {
             ei_pair_t = map.t_ref;
             break;
           }
-        }
+        }*/
         /*if (ei_pair_n != 0) {
           if (ei_pair_t != prev_t) {
             if (t_seen.count(ei_pair_t)) {
@@ -149,9 +155,9 @@ void ExtAPI::init() {
           }
           info[ei_pair_n] = ei_pair_t;
         }*/
-      }
-    }
-  }
+      //}
+    //}
+  //}
   static const ei_pair ei_pairs[]=
 {
     //The current llvm-gcc puts in the \01.
