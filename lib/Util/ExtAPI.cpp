@@ -80,8 +80,9 @@ void ExtAPI::init() {
   ExtAPI::extf_t ei_pair_t;
   std::size_t pos_start, pos_end;
   bool getEIPairs = false;
+
+  
   std::ifstream getEiPairs("lib/Util/summary.txt");
-  int count = 0;
   if (getEiPairs.is_open()) {
     while (getEiPairs >> get_line) {
       // std::cout << get_line << "\n";
