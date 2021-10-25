@@ -132,21 +132,23 @@ void ExtAPI::init() {
             break;
           }
         }
-        if (ei_pair_t != prev_t && ei_pair_n != 0) {
-          if (t_seen.count(ei_pair_t)) {
+        if (ei_pair_n != 0) {
+          if (ei_pair_t != prev_t) {
+            if (t_seen.count(ei_pair_t)) {
+              fputs(ei_pair_n, stderr);
+              putc('\n', stderr);
+              assert(!"ei_pairs not grouped by type");
+            }
+            t_seen.insert(ei_pair_t);
+            prev_t = ei_pair_t;
+          }
+          if (info.count(ei_pair_n)) {
             fputs(ei_pair_n, stderr);
             putc('\n', stderr);
-            assert(!"ei_pairs not grouped by type");
+            assert(!"duplicate name in ei_pairs");
           }
-          t_seen.insert(ei_pair_t);
-          prev_t = ei_pair_t;
+          info[ei_pair_n] = ei_pair_t;
         }
-        if (info.count(ei_pair_n)) {
-          fputs(ei_pair_n, stderr);
-          putc('\n', stderr);
-          assert(!"duplicate name in ei_pairs");
-        }
-        info[ei_pair_n] = ei_pair_t;
       }
     }
   }
