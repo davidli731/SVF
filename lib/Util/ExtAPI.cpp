@@ -83,13 +83,13 @@ void ExtAPI::init() {
   int count = 0;
   while (std::getline(getEiPairs, get_line)) {
     // Remove spaces
-    /*for (char c : get_line) {
+    for (char c : get_line) {
       if (c != ' ') {
         get_char = c;
         break;
       }
     }
-    get_str = get_line.substr(get_line.find(get_char));
+    /*get_str = get_line.substr(get_line.find(get_char));
     if (get_str.find("ei_pair ei_pairs[]") == 0) {
       getEIPairs = true;
     } else if (get_str.find("};") == 0) {
