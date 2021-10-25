@@ -83,7 +83,7 @@ void ExtAPI::init() {
   int count = 0;
   while (std::getline(getEiPairs, get_line)) {
     // Remove spaces
-    for (char c : get_line) {
+    /*for (char c : get_line) {
       if (c != ' ') {
         get_char = c;
         break;
@@ -131,7 +131,7 @@ void ExtAPI::init() {
             ei_pair_t = map.t_ref;
             break;
           }
-        }
+        }*/
         /*if (ei_pair_n != 0) {
           if (ei_pair_t != prev_t) {
             if (t_seen.count(ei_pair_t)) {
@@ -149,8 +149,8 @@ void ExtAPI::init() {
           }
           info[ei_pair_n] = ei_pair_t;
         }*/
-      }
-    }
+      //}
+    //}
   }
   static const ei_pair ei_pairs[]=
 {
