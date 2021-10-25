@@ -1,6 +1,6 @@
 //Each (name, type) pair will be inserted into the map.
 //All entries of the same type must occur together (for error detection).
-ei_pair ei_pairs[] -> {
+ei_pair ei_pairs[] = {
     //The current llvm-gcc puts in the \01.
     {"\01creat64", ExtAPI::EFT_NOOP},
     {"\01fseeko64", ExtAPI::EFT_NOOP},
