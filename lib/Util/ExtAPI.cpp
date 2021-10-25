@@ -86,7 +86,6 @@ void ExtAPI::init() {
     for (char c : get_line) {
       if (c != ' ') {
         get_char = c;
-        break;
       }
     }
     /*get_str = get_line.substr(get_line.find(get_char));
