@@ -74,7 +74,7 @@ void ExtAPI::init() {
   set<extf_t> t_seen;
   extf_t prev_t = EFT_NOOP;
   t_seen.insert(EFT_NOOP);
-  std::string get_line, get_str, temp_str;
+  /*std::string get_line, get_str, temp_str;
   char get_char;
   const char *ei_pair_n;
   ExtAPI::extf_t ei_pair_t;
@@ -82,7 +82,7 @@ void ExtAPI::init() {
   bool getEIPairs = false;
 
   std::ifstream getEiPairs("lib/Util/summary.txt");
-  /*if (getEiPairs.is_open()) {
+  if (getEiPairs.is_open()) {
     while (std::getline(getEiPairs, get_line)) {
     }
     while (std::getline(getEiPairs, get_line)) {
