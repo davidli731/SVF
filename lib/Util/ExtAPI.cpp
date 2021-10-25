@@ -79,13 +79,15 @@ void ExtAPI::init() {
   ExtAPI::extf_t ei_pair_t;
   std::size_t pos_start, pos_end;
   bool getEIPairs = false;
+  bool getFirstChar = false;
   std::ifstream getEiPairs("lib/Util/summary.txt");
   int count = 0;
   while (std::getline(getEiPairs, get_line)) {
     // Remove spaces
     for (char c : get_line) {
-      if (c != ' ') {
+      if (c != ' ' && !getFirstChar) {
         get_char = c;
+        getFirstChar = true;
       }
     }
     /*get_str = get_line.substr(get_line.find(get_char));
