@@ -7,7 +7,7 @@
  * Modified by Yulei Sui 2013
 */
 
-/*#include "Util/ExtAPI.h"
+#include "Util/ExtAPI.h"
 #include <fstream>
 #include <stdio.h>
 #include <string>
@@ -64,35 +64,11 @@ static const ei_pair_map ei_pair_maps[] = {
     {"ExtAPI::CPP_EFT_A0R_A1", ExtAPI::CPP_EFT_A0R_A1},
     {"ExtAPI::CPP_EFT_A0R_A1R", ExtAPI::CPP_EFT_A0R_A1R},
     {"ExtAPI::CPP_EFT_A1R", ExtAPI::CPP_EFT_A1R},
-    {"ExtAPI::CPP_EFT_DYNAMIC_CAST", ExtAPI::CPP_EFT_DYNAMIC_CAST}};*/
+    {"ExtAPI::CPP_EFT_DYNAMIC_CAST", ExtAPI::CPP_EFT_DYNAMIC_CAST}};
 
-/*  FIXME:
- *  SSL_CTX_ctrl, SSL_ctrl - may set the ptr field arg0->x
- *  SSL_CTX_set_verify - sets the function ptr field arg0->x
- *  X509_STORE_CTX_get_current_cert - returns arg0->x
- *  X509_get_subject_name - returns arg0->x->y
- *  XStringListToTextProperty, XGetWindowAttributes - sets arg2->x
- *  XInitImage - sets function ptrs arg0->x->y
- *  XMatchVisualInfo - sets arg4->x
- *  XtGetApplicationResources - ???
- *  glob - sets arg3->gl_pathv
- *  gnutls_pkcs12_bag_get_data - copies arg0->element[arg1].data to *arg2
- *  gnutls_pkcs12_get_bag - finds the arg1'th bag in the ASN1 tree structure
- *    rooted at arg0->pkcs12 and copies it to *arg2
- *  gnutls_pkcs12_import - builds an ASN1 tree rooted at arg0->pkcs12,
- *    based on decrypted data
- *  gnutls_x509_crt_import - builds an ASN1 tree rooted at arg0->cert
- *  gnutls_x509_privkey_export_rsa_raw - points arg1->data thru arg6->data
- *    to new strings
- *  gnutls_x509_privkey_import, gnutls_x509_privkey_import_pkcs8 -
- *    builds an ASN1 tree rooted at arg0->key from decrypted data
- *  cairo_get_target - returns arg0->gstate->original_target
- *  hasmntopt - returns arg0->mnt_opts
- */
-
-/*void ExtAPI::init() {
+void ExtAPI::init() {
   set<extf_t> t_seen;
-  ei_pair pair;
+  // ei_pair pair;
   extf_t prev_t = EFT_NOOP;
   t_seen.insert(EFT_NOOP);
   std::string get_line, get_str, temp_str;
@@ -102,7 +78,6 @@ static const ei_pair_map ei_pair_maps[] = {
   std::size_t pos_start, pos_end;
   bool getEIPairs = false;
   std::ifstream getEiPairs("lib/Util/summary.txt");
-  int count = 0;
   while (std::getline(getEiPairs, get_line)) {
     // Remove spaces
     for (char c : get_line) {
@@ -130,7 +105,7 @@ static const ei_pair_map ei_pair_maps[] = {
         }
         // Get const *char ei_pair_n
         if (n_str.find("\\01") == 0) {
-          temp_str = "\01" + n_str.substr(3);
+          temp_str = '\01' + n_str.substr(3);
           ei_pair_n = temp_str.c_str();
         } else if (n_str.find("0") == 0) {
           ei_pair_n = 0;
@@ -154,44 +129,27 @@ static const ei_pair_map ei_pair_maps[] = {
             break;
           }
         }
-        std::cout << ei_pair_n << " " << ei_pair_t << "\n";
+        if (ei_pair_t != prev_t) {
+          if (t_seen.count(ei_pair_t)) {
+            fputs(ei_pair_n, stderr);
+            putc('\n', stderr);
+            assert(!"ei_pairs not grouped by type");
+          }
+          t_seen.insert(ei_pair_t);
+          prev_t = ei_pair_t;
+        }
+        if (info.count(ei_pair_n)) {
+          fputs(ei_pair_n, stderr);
+          putc('\n', stderr);
+          assert(!"duplicate name in ei_pairs");
+        }
+        info[ei_pair_n] = ei_pair_t;
       }
     }
   }
-  for (const ei_pair *p = ei_pairs; p->n; ++p) {
-    // std::cout << p->n << " " << p->t << "\n";
-    if (p->t != prev_t) {
-      // This will detect if you move an entry to another block
-      //  but forget to change the type.
-      if (t_seen.count(p->t)) {
-        fputs(p->n, stderr);
-        putc('\n', stderr);
-        assert(!"ei_pairs not grouped by type");
-      }
-      // std::cout << p->n << " " << p->t << "\n";
-      t_seen.insert(p->t);
-      prev_t = p->t;
-    }
-    if (info.count(p->n)) {
-      fputs(p->n, stderr);
-      putc('\n', stderr);
-      assert(!"duplicate name in ei_pairs");
-    }
-    // std::cout << p->n << " " << p->t << "\n";
-    info[p->n] = p->t;
-  }
-}*/
+}
 
-/*  [ExtAPI.cpp] The actual database of external functions
- *  v. 005, 2008-08-08
- *------------------------------------------------------------------------------
- */
-
-/*
- * Modified by Yulei Sui 2013
-*/
-
-#include "Util/ExtAPI.h"
+/*#include "Util/ExtAPI.h"
 #include <stdio.h>
 #include <iostream>
 
@@ -962,73 +920,61 @@ static const ei_pair ei_pairs[]=
     {"XGetWindowProperty", ExtAPI::EFT_A11R_NEW},
 
     // C++ STL functions
-    // std::_Rb_tree_insert_and_rebalance(bool, std::_Rb_tree_node_base*, std::_Rb_tree_node_base*, std::_Rb_tree_node_base&)
-    {"_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_", ExtAPI::EFT_STD_RB_TREE_INSERT_AND_REBALANCE},
+    // std::_Rb_tree_insert_and_rebalance(bool, std::_Rb_tree_node_base*,
+std::_Rb_tree_node_base*, std::_Rb_tree_node_base&)
+    {"_ZSt29_Rb_tree_insert_and_rebalancebPSt18_Rb_tree_node_baseS0_RS_",
+ExtAPI::EFT_STD_RB_TREE_INSERT_AND_REBALANCE},
 
     // std::_Rb_tree_increment   and   std::_Rb_tree_decrement
     // TODO: the following side effects seem not to be necessary
-//    {"_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base", ExtAPI::EFT_STD_RB_TREE_INCREMENT},
-//    {"_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base", ExtAPI::EFT_STD_RB_TREE_INCREMENT},
+//    {"_ZSt18_Rb_tree_incrementPKSt18_Rb_tree_node_base",
+ExtAPI::EFT_STD_RB_TREE_INCREMENT},
+//    {"_ZSt18_Rb_tree_decrementPSt18_Rb_tree_node_base",
+ExtAPI::EFT_STD_RB_TREE_INCREMENT},
 
     {"_ZNSt8__detail15_List_node_base7_M_hookEPS0_", ExtAPI::EFT_STD_LIST_HOOK},
 
 
     /// string constructor: string (const char *s)
     {"_ZNSsC1EPKcRKSaIcE", ExtAPI::CPP_EFT_A0R_A1}, // c++98
-    {"_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC1EPKcRKS3_", ExtAPI::CPP_EFT_A0R_A1}, // c++11
+    {"_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC1EPKcRKS3_",
+ExtAPI::CPP_EFT_A0R_A1}, // c++11
 
     /// string constructor: string (const char *s, size_t n)
     {"_ZNSsC1EPKcmRKSaIcE", ExtAPI::CPP_EFT_A0R_A1}, // c++98
-    {"_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC1EPKcmRKS3_", ExtAPI::CPP_EFT_A0R_A1}, // c++11
+    {"_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC1EPKcmRKS3_",
+ExtAPI::CPP_EFT_A0R_A1}, // c++11
 
     /// string operator=: operator= (const char *s)
     {"_ZNSsaSEPKc", ExtAPI::CPP_EFT_A0R_A1}, // c++98
-    {"_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc", ExtAPI::CPP_EFT_A0R_A1}, // c++11
+    {"_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSEPKc",
+ExtAPI::CPP_EFT_A0R_A1}, // c++11
 
     /// string constructor: string (const string &str)
     {"_ZNSsC1ERKSs", ExtAPI::CPP_EFT_A0R_A1R}, // c++98
-    {"_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC1ERKS4_", ExtAPI::CPP_EFT_A0R_A1R}, // c++11
+    {"_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC1ERKS4_",
+ExtAPI::CPP_EFT_A0R_A1R}, // c++11
 
     /// string constructor: string (const string &str, size_t pos, size_t len)
     {"_ZNSsC1ERKSsmm", ExtAPI::CPP_EFT_A0R_A1R}, // c++98
-    {"_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC1ERKS4_mm", ExtAPI::CPP_EFT_A0R_A1R}, // c++11
+    {"_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEC1ERKS4_mm",
+ExtAPI::CPP_EFT_A0R_A1R}, // c++11
 
     /// string operator=: operator= (const string &str)
     {"_ZNSsaSERKSs", ExtAPI::CPP_EFT_A0R_A1R}, // c++98
-    {"_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_", ExtAPI::CPP_EFT_A0R_A1R}, // c++11
+    {"_ZNSt7__cxx1112basic_stringIcSt11char_traitsIcESaIcEEaSERKS4_",
+ExtAPI::CPP_EFT_A0R_A1R}, // c++11
 
     /// std::operator<<: operator<< (const string &str)
-    {"_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKSbIS4_S5_T1_E", ExtAPI::CPP_EFT_A1R}, // c++98
-    {"_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE", ExtAPI::CPP_EFT_A1R}, // c++11
+    {"_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKSbIS4_S5_T1_E",
+ExtAPI::CPP_EFT_A1R}, // c++98
+    {"_ZStlsIcSt11char_traitsIcESaIcEERSt13basic_ostreamIT_T0_ES7_RKNSt7__cxx1112basic_stringIS4_S5_T1_EE",
+ExtAPI::CPP_EFT_A1R}, // c++11
 
     //This must be the last entry.
     {"__dynamic_cast", ExtAPI::CPP_EFT_DYNAMIC_CAST},
     {0, ExtAPI::EFT_NOOP}
 };
-
-/*  FIXME:
- *  SSL_CTX_ctrl, SSL_ctrl - may set the ptr field arg0->x
- *  SSL_CTX_set_verify - sets the function ptr field arg0->x
- *  X509_STORE_CTX_get_current_cert - returns arg0->x
- *  X509_get_subject_name - returns arg0->x->y
- *  XStringListToTextProperty, XGetWindowAttributes - sets arg2->x
- *  XInitImage - sets function ptrs arg0->x->y
- *  XMatchVisualInfo - sets arg4->x
- *  XtGetApplicationResources - ???
- *  glob - sets arg3->gl_pathv
- *  gnutls_pkcs12_bag_get_data - copies arg0->element[arg1].data to *arg2
- *  gnutls_pkcs12_get_bag - finds the arg1'th bag in the ASN1 tree structure
- *    rooted at arg0->pkcs12 and copies it to *arg2
- *  gnutls_pkcs12_import - builds an ASN1 tree rooted at arg0->pkcs12,
- *    based on decrypted data
- *  gnutls_x509_crt_import - builds an ASN1 tree rooted at arg0->cert
- *  gnutls_x509_privkey_export_rsa_raw - points arg1->data thru arg6->data
- *    to new strings
- *  gnutls_x509_privkey_import, gnutls_x509_privkey_import_pkcs8 -
- *    builds an ASN1 tree rooted at arg0->key from decrypted data
- *  cairo_get_target - returns arg0->gstate->original_target
- *  hasmntopt - returns arg0->mnt_opts
- */
 
 
 void ExtAPI::init()
@@ -1036,8 +982,9 @@ void ExtAPI::init()
     set<extf_t> t_seen;
     extf_t prev_t= EFT_NOOP;
     t_seen.insert(EFT_NOOP);
-    /*for(const ei_pair *p= ei_pairs; p->n; ++p)
+    for(const ei_pair *p= ei_pairs; p->n; ++p)
     {
+      std::cout << p->n << "\n";
         if(p->t != prev_t)
         {
             //This will detect if you move an entry to another block
@@ -1058,27 +1005,5 @@ void ExtAPI::init()
             assert(!"duplicate name in ei_pairs");
         }
         info[p->n]= p->t;
-    }*/
-    for (auto p : ei_pairs) {
-      if(p.t != prev_t)
-        {
-            //This will detect if you move an entry to another block
-            //  but forget to change the type.
-            if(t_seen.count(p.t))
-            {
-                fputs(p.n, stderr);
-                putc('\n', stderr);
-                assert(!"ei_pairs not grouped by type");
-            }
-            t_seen.insert(p.t);
-            prev_t= p.t;
-        }
-        if(info.count(p.n))
-        {
-            fputs(p.n, stderr);
-            putc('\n', stderr);
-            assert(!"duplicate name in ei_pairs");
-        }
-        info[p.n]= p.t;
     }
-}
+}*/
