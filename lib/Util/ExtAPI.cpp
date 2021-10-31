@@ -78,6 +78,7 @@ void ExtAPI::init()
   set<extf_t> t_seen;
   extf_t prev_t = EFT_NOOP;
   t_seen.insert(EFT_NOOP);
+  ei_pair ei_pairs[736];
   std::string get_line, get_str, temp_str, ei_pair_n[736];
   char get_char;
   const char *n_char;
@@ -165,8 +166,7 @@ void ExtAPI::init()
       }
     }
   }
-  ei_pair ei_pairs[736];
-  for (int i = 0; i < (sizeof(ei_pairs) / sizeof(*ei_pairs)); i++)
+  for (int i = 0; i < 736; i++)
   {
     if (ei_pair_n[i].compare("0") != 0)
     {
