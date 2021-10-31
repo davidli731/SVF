@@ -171,8 +171,10 @@ void ExtAPI::init()
     if (ei_pair_n[i].compare("0") != 0)
     {
       n_char = ei_pair_n[i].c_str();
-      ei_pairs[i] = {n_char, ei_pair_t[i]};
+    } else {
+      n_char = 0;
     }
+    ei_pairs[i] = {n_char, ei_pair_t[i]};
   }
 
   for (const ei_pair *p = ei_pairs; p->n; ++p)
@@ -194,7 +196,7 @@ void ExtAPI::init()
     {
       fputs(p->n, stderr);
       putc('\n', stderr);
-      assert(!"duplicate name in ei_pairs");
+      //assert(!"duplicate name in ei_pairs");
     }
     info[p->n] = p->t;
   }
