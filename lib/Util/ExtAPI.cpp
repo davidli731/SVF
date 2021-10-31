@@ -168,10 +168,10 @@ void ExtAPI::init()
   ei_pair ei_pairs[736];
   for (int i = 0; i < (sizeof(ei_pairs) / sizeof(*ei_pairs)); i++)
   {
-    if (ei_pair_n[i].compare("0") != 0)
+    if (ei_pair_n[i].compare("0") != 0 && ei_pair_n[i].find("\\01") != 0)
     {
       n_char = ei_pair_n[i].c_str();
-    } else {
+    } else if (ei_pair_n[i].compare("0") == 0) {
       n_char = 0;
     }
     ei_pairs[i] = {n_char, ei_pair_t[i]};
