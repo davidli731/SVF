@@ -9,26 +9,29 @@
 
 #include "Util/ExtAPI.h"
 #include <fstream>
+#include <iostream>
 #include <stdio.h>
 #include <string>
-#include <iostream>
 
 using namespace std;
 using namespace SVF;
 
 ExtAPI *ExtAPI::extAPI = nullptr;
 
-namespace {
+namespace
+{
 
-struct ei_pair {
-  const char *n;
-  ExtAPI::extf_t t;
-};
+  struct ei_pair
+  {
+    const char *n;
+    ExtAPI::extf_t t;
+  };
 
-struct ei_pair_map {
-  std::string string_ref;
-  ExtAPI::extf_t t_ref;
-};
+  struct ei_pair_map
+  {
+    std::string string_ref;
+    ExtAPI::extf_t t_ref;
+  };
 
 } // End anonymous namespace
 
@@ -70,91 +73,150 @@ static const ei_pair_map ei_pair_maps[] = {
     {"ExtAPI::CPP_EFT_DYNAMIC_CAST", ExtAPI::CPP_EFT_DYNAMIC_CAST},
     {"ExtAPI::EFT_OTHER", ExtAPI::EFT_OTHER}};
 
-void ExtAPI::init() {
+void ExtAPI::init()
+{
   set<extf_t> t_seen;
   extf_t prev_t = EFT_NOOP;
   t_seen.insert(EFT_NOOP);
-  std::string get_line, get_str, temp_str;
+  std::string get_line, get_str, temp_str, ei_pair_n[736];
   char get_char;
-  const char *ei_pair_n;
-  ExtAPI::extf_t ei_pair_t;
+  const char *n_char;
+  ExtAPI::extf_t ei_pair_t[736];
   std::size_t pos_start, pos_end;
   bool getEIPairs = false;
-
   std::ifstream getEiPairs("lib/Util/summary.txt");
-  if (getEiPairs.is_open()) {
-    while (std::getline(getEiPairs, get_line)) {
-    }
-    while (std::getline(getEiPairs, get_line)) {
+  std::ofstream outputFile;
+  outputFile.open("lib/Util/summary1.txt");
+  int count = 0;
+  //ei_pair *arr = new ei_pair[735];
+
+  if (getEiPairs.is_open())
+  {
+    while (std::getline(getEiPairs, get_line))
+    {
       // Remove spaces
-      for (char c : get_line) {
-        if (c != ' ') {
+      for (char c : get_line)
+      {
+        if (c != ' ')
+        {
           get_char = c;
           break;
         }
       }
       get_str = get_line.substr(get_line.find(get_char));
-      if (get_str.find("ei_pair ei_pairs[]") == 0) {
+      if (get_str.find("ei_pair ei_pairs[]") == 0)
+      {
         getEIPairs = true;
-      } else if (get_str.find("};") == 0) {
+      }
+      else if (get_str.find("};") == 0)
+      {
         getEIPairs = false;
       }
-      if (getEIPairs) {
-        if (get_str.find("{") == 0) {
+      if (getEIPairs)
+      {
+        if (get_str.find("{") == 0)
+        {
           pos_start = 1;
           pos_end = get_str.find(",") - 1;
           std::string n_str;
-          for (char c : get_str.substr(pos_start, pos_end)) {
+          for (char c : get_str.substr(pos_start, pos_end))
+          {
             // Remove " "
-            if (c != '"') {
+            if (c != '"')
+            {
               n_str += c;
             }
           }
           // Get const *char ei_pair_n
-          if (n_str.find("\\01") == 0) {
+          if (n_str.find("\\01") == 0)
+          {
             temp_str = '\01' + n_str.substr(3);
-            ei_pair_n = temp_str.c_str();
-          } else if (n_str.find("0") == 0) {
-            ei_pair_n = 0;
-          } else {
-            ei_pair_n = n_str.c_str();
+            ei_pair_n[count] = temp_str.c_str();
+          }
+          else if (n_str.find("0") == 0)
+          {
+            ei_pair_n[count] = "0";
+          }
+          else
+          {
+            ei_pair_n[count] = n_str.c_str();
           }
           // Get ExtAPI::extf_t ei_pair_t
           pos_start = get_str.find(",");
           std::string t_str;
-          for (char c : get_str.substr(pos_start + 1)) {
-            if (c == '}') {
+          for (char c : get_str.substr(pos_start + 1))
+          {
+            if (c == '}')
+            {
               break;
             }
-            if (c != ' ') {
+            if (c != ' ')
+            {
               t_str += c;
             }
           }
-          for (ei_pair_map map : ei_pair_maps) {
-            if (t_str.compare(map.string_ref) == 0) {
-              ei_pair_t = map.t_ref;
+          for (ei_pair_map map : ei_pair_maps)
+          {
+            if (t_str.compare(map.string_ref) == 0)
+            {
+              ei_pair_t[count] = map.t_ref;
               break;
             }
           }
-          if (ei_pair_n != 0) {
-            if (ei_pair_t != prev_t) {
-              if (t_seen.count(ei_pair_t)) {
-                fputs(ei_pair_n, stderr);
-                putc('\n', stderr);
-                assert(!"ei_pairs not grouped by type");
-              }
-              t_seen.insert(ei_pair_t);
-              prev_t = ei_pair_t;
-            }
-            if (info.count(ei_pair_n)) {
-              fputs(ei_pair_n, stderr);
-              putc('\n', stderr);
-              assert(!"duplicate name in ei_pairs");
-            }
-            info[ei_pair_n] = ei_pair_t;
-          }
+
+          outputFile << ei_pair_n << " " << ei_pair_t << "\n";
+
+          count++;
         }
       }
     }
   }
+  outputFile.close();
+  // try static/dynamic array
+  ei_pair ei_pairs[736];
+  for (int i = 0; i < (sizeof(ei_pairs) / sizeof(*ei_pairs)); i++)
+  {
+    if (ei_pair_n[i].compare("0") != 0)
+    {
+      n_char = ei_pair_n[i].c_str();
+    }
+    else
+    {
+      n_char = 0;
+    }
+    ei_pairs[i] = {n_char, ei_pair_t[i]};
+  }
+
+  for (const ei_pair *p = ei_pairs; p->n; ++p)
+  {
+    if (p->t != prev_t)
+    {
+      //This will detect if you move an entry to another block
+      //  but forget to change the type.
+      if (t_seen.count(p->t))
+      {
+        fputs(p->n, stderr);
+        putc('\n', stderr);
+        assert(!"ei_pairs not grouped by type");
+      }
+      t_seen.insert(p->t);
+      prev_t = p->t;
+    }
+    if (info.count(p->n))
+    {
+      fputs(p->n, stderr);
+      putc('\n', stderr);
+      assert(!"duplicate name in ei_pairs");
+    }
+    info[p->n] = p->t;
+  }
+
+  /*for (int i = 0; i < (sizeof(ei_pair_n)/sizeof(*ei_pair_n)); i++) {
+    if (ei_pair_n[i].compare("0") != 0) {
+      n_char = ei_pair_n[i].c_str();
+    } else {
+      n_char = 0;
+    }
+    std::cout << n_char << " " << ei_pair_t[i] << "\n";
+  }*/
 }
