@@ -178,7 +178,8 @@ void ExtAPI::init()
     }
     ei_pairs[i] = {n_char, ei_pair_t[i]};
   }*/
-  static const ei_pair ei_pairs[] =
+
+  ei_pair ei_pairs[] =
       {
           //The current llvm-gcc puts in the \01.
           {"\01creat64", ExtAPI::EFT_NOOP},
