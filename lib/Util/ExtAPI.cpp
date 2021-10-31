@@ -165,7 +165,6 @@ void ExtAPI::init()
       }
     }
   }
-  // try static/dynamic array
   ei_pair ei_pairs[736];
   for (int i = 0; i < (sizeof(ei_pairs) / sizeof(*ei_pairs)); i++)
   {
@@ -199,7 +198,7 @@ void ExtAPI::init()
     {
       fputs(p->n, stderr);
       putc('\n', stderr);
-      assert(!"duplicate name in ei_pairs");
+      assert(!"duplicate name in ei_pairs"+p->n);
     }
     info[p->n] = p->t;
   }
