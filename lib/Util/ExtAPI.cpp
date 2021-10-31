@@ -198,7 +198,7 @@ void ExtAPI::init()
     {
       fputs(p->n, stderr);
       putc('\n', stderr);
-      assert(!"duplicate name in ei_pairs"+p->n);
+      assert(!"duplicate name in ei_pairs");
     }
     info[p->n] = p->t;
   }
