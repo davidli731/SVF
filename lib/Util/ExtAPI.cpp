@@ -85,10 +85,7 @@ void ExtAPI::init()
   std::size_t pos_start, pos_end;
   bool getEIPairs = false;
   std::ifstream getEiPairs("lib/Util/summary.txt");
-  std::ofstream outputFile;
-  outputFile.open("lib/Util/summary1.txt");
   int count = 0;
-  //ei_pair *arr = new ei_pair[735];
 
   if (getEiPairs.is_open())
   {
@@ -163,15 +160,11 @@ void ExtAPI::init()
               break;
             }
           }
-
-          outputFile << ei_pair_n << " " << ei_pair_t << "\n";
-
           count++;
         }
       }
     }
   }
-  outputFile.close();
   // try static/dynamic array
   ei_pair ei_pairs[736];
   for (int i = 0; i < (sizeof(ei_pairs) / sizeof(*ei_pairs)); i++)
@@ -210,13 +203,4 @@ void ExtAPI::init()
     }
     info[p->n] = p->t;
   }
-
-  /*for (int i = 0; i < (sizeof(ei_pair_n)/sizeof(*ei_pair_n)); i++) {
-    if (ei_pair_n[i].compare("0") != 0) {
-      n_char = ei_pair_n[i].c_str();
-    } else {
-      n_char = 0;
-    }
-    std::cout << n_char << " " << ei_pair_t[i] << "\n";
-  }*/
 }
