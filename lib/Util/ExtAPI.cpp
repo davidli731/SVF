@@ -36,7 +36,7 @@ namespace
 
 } // End anonymous namespace
 
-static const char *ei_pairs2[] =
+const char *ei_pairs2[] =
     {
         //The current llvm-gcc puts in the \01.
         {"\01creat64"},
