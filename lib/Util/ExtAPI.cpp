@@ -177,7 +177,7 @@ void ExtAPI::init()
     ei_pairs[i] = {n_char, ei_pair_t[i]};
   }*/
 
-  ei_pair ei_pairs2[] =
+  static const ei_pair ei_pairs2[] =
       {
           //The current llvm-gcc puts in the \01.
           {"\01creat64", ExtAPI::EFT_NOOP},
@@ -968,11 +968,6 @@ void ExtAPI::init()
           //This must be the last entry.
           {"__dynamic_cast", ExtAPI::CPP_EFT_DYNAMIC_CAST},
           {0, ExtAPI::EFT_NOOP}};
-
-  for (int i = 0; i < (sizeof(ei_pairs2) / sizeof(*ei_pairs2)); i++)
-  {
-    ei_pairs[i] = {ei_pairs2[i].n, ei_pairs2[i].t};
-  }
 
   for (const ei_pair *p = ei_pairs2; p->n; ++p)
   {
