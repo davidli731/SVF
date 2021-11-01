@@ -918,7 +918,7 @@ void ExtAPI::init()
     {
       n_char = 0;
     }*/
-    ei_pairs[i] = {ei_pair_n_maps[i].n_ref, ei_pair_t[i]};
+    ei_pairs[i] = {ei_pair_n_maps[i], ei_pair_t[i]};
   }
 
   /*const char *test1 = "test";
