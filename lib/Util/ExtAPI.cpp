@@ -874,7 +874,7 @@ void ExtAPI::init()
   ei_pair ei_pairs[736];
   std::string get_line, get_str, temp_str, ei_pair_n[736];
   char get_char;
-  const char *n_char;
+  const char *n_char[736];
   ExtAPI::extf_t ei_pair_t[736];
   std::size_t pos_start, pos_end;
   bool getEIPairs = false;
@@ -959,17 +959,17 @@ void ExtAPI::init()
     }
   }
 
-  for (int i = 0; i < (sizeof(ei_pairs) / sizeof(*ei_pairs)); i++)
+  for (int i = 0; i < 736; i++)
   {
     if (ei_pair_n[i] != "0")
     {
-      n_char = ei_pair_n[i].c_str();
+      n_char[i] = ei_pair_n[i].c_str();
     }
     else
     {
-      n_char = 0;
+      n_char[i] = 0;
     }
-    ei_pairs[i] = {ei_pairs2[i].n, ei_pair_t[i]};
+    ei_pairs[i] = {n_char[i], ei_pair_t[i]};
   }
 
   /*const char *test1 = "test";
