@@ -34,14 +34,9 @@ namespace
     ExtAPI::extf_t t_ref;
   };
 
-  struct ei_pair_n_map
-  {
-    const char *n_ref;
-  };
-
 } // End anonymous namespace
 
-static const ei_pair_n_map ei_pair_n_maps[] =
+static const char *ei_pair_n_maps[] =
     {
         //The current llvm-gcc puts in the \01.
         "\01creat64",
