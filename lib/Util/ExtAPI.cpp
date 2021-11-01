@@ -80,7 +80,6 @@ void ExtAPI::init()
   t_seen.insert(EFT_NOOP);
   ei_pair ei_pairs[736];
   std::string get_line, get_str, temp_str, ei_pair_n[736];
-  //const char *ei_pair_n[736];
   char get_char;
   const char *n_char;
   ExtAPI::extf_t ei_pair_t[736];
@@ -129,8 +128,7 @@ void ExtAPI::init()
           // Get const *char ei_pair_n
           if (n_str.find("\\01") == 0)
           {
-            temp_str = '\01' + n_str.substr(3);
-            ei_pair_n[count] = temp_str;
+            ei_pair_n[count] = '\01' + n_str.substr(3);
           }
           else if (n_str.find("0") == 0)
           {
@@ -194,12 +192,12 @@ void ExtAPI::init()
       t_seen.insert(p->t);
       prev_t = p->t;
     }
-    if (info.count(p->n))
+    /*if (info.count(p->n))
     {
       fputs(p->n, stderr);
       putc('\n', stderr);
       assert(!"duplicate name in ei_pairs");
-    }
+    }*/
     info[p->n] = p->t;
   }
 }
