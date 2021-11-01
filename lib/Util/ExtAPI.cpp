@@ -974,7 +974,7 @@ void ExtAPI::init()
     ei_pairs[i] = {ei_pairs2[i].n, ei_pairs2[i].t};
   }
 
-  for (const ei_pair *p = ei_pairs; p->n; ++p)
+  for (const ei_pair *p = ei_pairs2; p->n; ++p)
   {
     if (p->t != prev_t)
     {
