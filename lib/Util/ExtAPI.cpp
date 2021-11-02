@@ -974,18 +974,18 @@ void ExtAPI::init()
     ei_pairs[i] = {n_char[i], ei_pair_t[i]};
   }
 
-  /*const char *test1 = "test";
+  const char *test1 = "test";
   const char *test2 = "test";
-  std::string str = test2;
-  test2 = str.c_str();
+  //std::string str = "test";
+  //test2 = str.c_str();
 
   if (test1 == test2) {
     std::cout << "test true\n";
   } else {
     std::cout << "test false\n";
-  }*/
+  }
 
-  for (const ei_pair *p = ei_pairs2; p->n; ++p)
+  for (const ei_pair *p = ei_pairs; p->n; ++p)
   {
     if (p->t != prev_t)
     {
