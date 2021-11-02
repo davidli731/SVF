@@ -971,7 +971,7 @@ void ExtAPI::init()
     {
       n_char[i] = 0;
     }
-    ei_pairs[i] = {ei_pairs2[i].n, ei_pairs2[i].t};
+    ei_pairs[i] = {n_char[i], ei_pair_t[i]};
   }
 
   /*const char *test1 = "test";
@@ -985,7 +985,7 @@ void ExtAPI::init()
     std::cout << "test false\n";
   }*/
 
-  for (const ei_pair *p = ei_pairs; p->n; ++p)
+  for (const ei_pair *p = ei_pairs2; p->n; ++p)
   {
     if (p->t != prev_t)
     {
